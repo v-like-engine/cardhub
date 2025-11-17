@@ -1,0 +1,16 @@
+# Python backend dependencies for SoundWound card game platform
+
+# Web framework
+Flask==2.3.3
+Flask-CORS==4.0.0
+
+# Database
+SQLAlchemy==2.0.21
+
+# Utilities
+python-dateutil==2.8.2
+
+# Development dependencies (optional)
+pytest==7.4.2
+pytest-flask==1.2.0
+flake8==6.0.0

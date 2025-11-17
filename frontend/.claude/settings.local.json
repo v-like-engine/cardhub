@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test -d \"V:/Users/Vladislav Honour/SoundWound/frontend/assets/sounds\")",
+      "Bash(test -f \"V:/Users/Vladislav Honour/SoundWound/frontend/assets/fonts/CardGame-Regular.ttf\")",
+      "Read(//v/Users/Vladislav Honour/SoundWound/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
