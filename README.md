@@ -1,6 +1,6 @@
-# SoundWound - Premium Card Game Platform
+# cardhub - Premium Card Game Platform
 
-SoundWound is a comprehensive card game platform that allows users to play classic card games (Fool, 101, BlackJack, and Uno) with AI opponents and online multiplayer. Built with Flutter for the frontend and Python for the backend, it provides a Steam-like experience for tabletop card games.
+cardhub is a comprehensive card game platform that allows users to play classic card games (Fool, 101, BlackJack, and Uno) with AI opponents and online multiplayer. Built with Flutter for the frontend and Python for the backend, it provides a Steam-like experience for tabletop card games.
 
 ## Features
 
@@ -53,7 +53,7 @@ SoundWound is a comprehensive card game platform that allows users to play class
 ## Project Structure
 
 ```
-SoundWound/
+cardhub/
 ├── frontend/                 # Flutter application
 │   ├── lib/
 │   │   ├── main.dart        # Application entry point
