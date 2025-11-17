@@ -19,6 +19,12 @@ import time
 import webbrowser
 import argparse
 
+# Add project root to Python path at the very beginning
+# This ensures all backend imports work correctly
+PROJECT_ROOT = Path(__file__).parent.resolve()
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 
 def print_banner():
     """Print application banner."""
@@ -87,10 +93,6 @@ def initialize_database():
     """Initialize the database if needed."""
     print("\n💾 Initializing database...")
     try:
-        # Add project root to Python path
-        project_root = Path(__file__).parent
-        sys.path.insert(0, str(project_root))
-
         from backend.database.database import get_database_manager
         db_manager = get_database_manager()
 
@@ -102,10 +104,12 @@ def initialize_database():
             return False
     except Exception as e:
         print(f"❌ Error initializing database: {e}")
+        import traceback
+        print(f"   Details: {traceback.format_exc()}")
         return False
 
 
-def start_server():
+def start_server(auto_open_browser=True):
     """Start the Flask server."""
     print("\n🚀 Starting CardHub server...\n")
     print("=" * 60)
@@ -114,24 +118,21 @@ def start_server():
     print("=" * 60)
     print("\n💡 Press CTRL+C to stop the server\n")
 
-    # Add project root to Python path
-    project_root = Path(__file__).parent
-    sys.path.insert(0, str(project_root))
-
     # Import and run the Flask app
     from backend.api.app import app
 
-    # Open browser after a short delay
-    def open_browser():
-        time.sleep(2)
-        try:
-            webbrowser.open('http://localhost:5000')
-        except Exception as e:
-            print(f"Could not open browser automatically: {e}")
-            print("Please open http://localhost:5000 manually")
+    # Open browser after a short delay (if enabled)
+    if auto_open_browser:
+        def open_browser():
+            time.sleep(2)
+            try:
+                webbrowser.open('http://localhost:5000')
+            except Exception as e:
+                print(f"Could not open browser automatically: {e}")
+                print("Please open http://localhost:5000 manually")
 
-    import threading
-    threading.Thread(target=open_browser, daemon=True).start()
+        import threading
+        threading.Thread(target=open_browser, daemon=True).start()
 
     # Run the server
     try:
@@ -184,7 +185,7 @@ def main():
         sys.exit(1)
 
     # Start server
-    start_server()
+    start_server(auto_open_browser=not args.no_browser)
 
 
 if __name__ == '__main__':

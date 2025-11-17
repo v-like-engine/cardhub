@@ -5,12 +5,11 @@ This module provides the RESTful API endpoints for the Flutter
 frontend to communicate with the Python game engine and database.
 """
 
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
 import logging
 import traceback
-from pathlib import Path
 
 from ..database.database import get_database_manager
 from .routes.auth import auth_bp
@@ -36,11 +35,7 @@ def create_app(config_name: str = 'development') -> Flask:
     Returns:
         Configured Flask application
     """
-    # Get the project root directory (two levels up from this file)
-    project_root = Path(__file__).parent.parent.parent
-    static_folder = project_root / 'static'
-
-    app = Flask(__name__, static_folder=str(static_folder))
+    app = Flask(__name__)
 
     # Load configuration
     app.config.update({
@@ -100,30 +95,25 @@ def create_app(config_name: str = 'development') -> Flask:
             'status_code': 500
         }), 500
 
-    # Root endpoint - serve web interface
+    # Root endpoint
     @app.route('/', methods=['GET'])
     def root():
-        """Root endpoint that serves the web interface."""
-        try:
-            return send_from_directory(app.static_folder, 'index.html')
-        except Exception as e:
-            logger.error(f"Failed to serve index.html: {e}")
-            # Fallback to JSON API info
-            return jsonify({
-                'message': 'Welcome to SoundWound Card Game Platform API',
-                'version': '1.0.0',
-                'status': 'online',
-                'timestamp': datetime.utcnow().isoformat(),
-                'endpoints': {
-                    'info': '/api/info',
-                    'health': '/api/health',
-                    'auth': '/api/auth',
-                    'games': '/api/games',
-                    'users': '/api/users',
-                    'statistics': '/api/statistics'
-                },
-                'documentation': 'Visit /api/info for detailed API information'
-            })
+        """Root endpoint that provides API information."""
+        return jsonify({
+            'message': 'Welcome to SoundWound Card Game Platform API',
+            'version': '1.0.0',
+            'status': 'online',
+            'timestamp': datetime.utcnow().isoformat(),
+            'endpoints': {
+                'info': '/api/info',
+                'health': '/api/health',
+                'auth': '/api/auth',
+                'games': '/api/games',
+                'users': '/api/users',
+                'statistics': '/api/statistics'
+            },
+            'documentation': 'Visit /api/info for detailed API information'
+        })
 
     # Health check endpoint
     @app.route('/api/health', methods=['GET'])
