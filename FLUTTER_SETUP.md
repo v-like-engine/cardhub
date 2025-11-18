@@ -51,15 +51,35 @@ brew install flutter
 # Or download from https://docs.flutter.dev/get-started/install/macos
 ```
 
-### Step 2: Install Chrome (for Web Development)
+### Step 2: Install a Browser (for Web Development)
 
-Flutter web requires Chrome to be installed:
+Flutter web requires a Chromium-based browser. You can use:
+
+**Option A: Use Yandex Browser** (Recommended - No Chrome needed!)
+- **Already installed?** Use the provided launcher scripts:
+  - **Linux/Mac**: `./run_flutter_yandex.sh`
+  - **Windows**: `run_flutter_yandex.bat`
+- **Not installed?** Download from https://browser.yandex.com/
+
+**Option B: Use Google Chrome**
 - **Windows/Mac**: Download from https://www.google.com/chrome/
 - **Linux**: `sudo apt install google-chrome-stable`
 
 ### Step 3: Run the Flutter App
 
 #### For Web (Easiest):
+
+**Using Yandex Browser (Recommended):**
+```bash
+# Make sure backend is running first in one terminal
+python run.py
+
+# In a new terminal, use the Yandex launcher script
+./run_flutter_yandex.sh      # Linux/Mac
+run_flutter_yandex.bat        # Windows
+```
+
+**Using Chrome:**
 ```bash
 # Make sure backend is running first
 python run.py
@@ -68,6 +88,18 @@ python run.py
 cd frontend
 flutter pub get          # Install dependencies
 flutter run -d chrome    # Run in Chrome
+```
+
+**Manual Setup for Any Browser:**
+```bash
+# Set your browser executable
+export CHROME_EXECUTABLE=/path/to/your/browser  # Linux/Mac
+set CHROME_EXECUTABLE=C:\path\to\browser.exe    # Windows
+
+# Run Flutter
+cd frontend
+flutter pub get
+flutter run -d web-server --web-port=8080
 ```
 
 #### For Desktop (Windows/Linux/Mac):
